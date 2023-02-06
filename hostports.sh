@@ -34,6 +34,7 @@ host_scan () {
 tput cnorm
 
 main() {
+  bash -c ip a
   echo -n "Enter the network like this (e.g. 10.10.0): "
   read network
   host_scan $network
