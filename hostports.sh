@@ -7,7 +7,6 @@ function ctrl_c(){
 
 #Ctrl+C
 trap ctrl_c INT
-
 tput civis
 
 #Main Function
