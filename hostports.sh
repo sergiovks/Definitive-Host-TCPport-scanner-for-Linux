@@ -19,12 +19,23 @@ host_scan () {
       timeout 1 bash -c "ping -c 1 ${network}.$i" &>/dev/null
       if [ $? -eq 0 ]; then
         echo "[+] Host ${network}.$i - ACTIVE"
+        
+        # TCP port scanning
         for port in $(seq 1 65535); do
           timeout 1 bash -c "echo '' > /dev/tcp/${network}.$i/$port" &>/dev/null
           if [ $? -eq 0 ]; then
-            echo "[+] Host ${network}.$i ACTIVE & PORT $port OPEN"
+            echo "[+] Host ${network}.$i ACTIVE & TCP PORT $port OPEN"
           fi
         done
+        
+        # UDP port scanning
+        for port in $(seq 1 65535); do
+          timeout 1 bash -c "echo '' > /dev/udp/${network}.$i/$port" &>/dev/null
+          if [ $? -eq 0 ]; then
+            echo "[+] Host ${network}.$i ACTIVE & UDP PORT $port OPEN"
+          fi
+        done
+        
       fi
     ) &
   done
